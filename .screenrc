@@ -1,0 +1,94 @@
+syntax on
+
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nu
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set scrolloff=1
+set sidescrolloff=5
+
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+
+set laststatus=2
+set ruler
+set wildmenu
+
+set colorcolumn=88
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'morhetz/gruvbox'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-fugitive'
+Plug 'mbbill/undotree'
+Plug 'davidhalter/jedi-vim'
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install', 'for': 'python' }
+
+call plug#end()
+
+colorscheme gruvbox
+set background=dark
+let mapleader = " "
+
+let g:netrw_browse_split=2
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+
+let g:ctrlp_use_caching = 0
+
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <Leader>ps :Rg<SPACE>
+
+(base) IMK-IFU-L040A8:~ chwala-c$ cat .screenrc 
+# Use bash
+shell /bin/bash
+
+autodetach on
+
+# Big scrollback
+defscrollback 5000
+
+# No annoying startup message
+startup_message off
+
+# mouse tracking allows to switch region focus by clicking
+mousetrack on
+
+# layout stuff
+layout autosave on
+bind j focus down
+bind k focus up
+bind l focus right
+bind h focus left
+
+backtick 1 1 1 /bin/bash -c 'cpuLoad=$(cut -s -d\  -f16 <(uptime)); cpuLoad=${cpuLoad:0:-1}; memLoad=...; echo "CPU load ${cpuLoad} Mem Load ${memLoad}" '
+backtick 1 1 1 /bin/bash -c 'cpuLoad=$(cut -s -d\  -f16 <(uptime)); cpuLoad=${cpuLoad:0:-1}; memLoad=$(free -g | grep Mem | awk '\''{print $3"/"$2" GB"}'\''); echo "CPU: ${cpuLoad} Mem: ${memLoad}" '
+
+# Display the status line at the bottom
+hardstatus on
+hardstatus alwayslastline
+hardstatus string "%{.kW}%-w%{.bW}%t [%n]%{-}%+w %= %{..R} %1` %{..G} %H %{..Y} %Y/%m/%d %c"
+
+term screen-256color
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E38;5;%dm'
+defbce "on"
